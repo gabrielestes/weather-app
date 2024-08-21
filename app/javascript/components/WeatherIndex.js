@@ -1,9 +1,26 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 const WeatherIndex = (props) => {
 	const [address, setAddress] = useState("");
+	const [weather, setWeather] = useState("");
 	console.log("Address is: ", address);
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
+		// .get(`http://localhost:3000/weather?address=${address}`)
+		axios
+			.get(`http://localhost:3000/weather`)
+			.then((response) => {
+				console.log(response);
+				// setWeather(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
 	return (
 		<React.Fragment>
@@ -18,7 +35,9 @@ const WeatherIndex = (props) => {
 					value={address}
 					onChange={(event) => setAddress(event.target.value)}
 				/>
-				<button type="submit">Submit</button>
+				<button type="submit" onClick={handleSubmit}>
+					Submit
+				</button>
 			</form>
 			<p>{props.weather}</p>
 		</React.Fragment>

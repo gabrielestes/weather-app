@@ -9,10 +9,15 @@ module TomorrowApi
     end
 
     def forecast(lat, lon)
-      options = { query: { apikey: @api_key, location: "#{lat},#{lon}" } }
+      # options = { query: { apikey: @api_key, location: "#{lat},#{lon}" } }
 
+      # self.class.get(
+      #   "/v4/weather/forecast", options
+      # )
+
+      params = { query: { latitude: 52.52, longitude: 13.41, daily: "temperature_2m_max"} }
       self.class.get(
-        "/v4/weather/forecast", options
+        "https://api.open-meteo.com/v1/forecast", params
       )
     end
   end
