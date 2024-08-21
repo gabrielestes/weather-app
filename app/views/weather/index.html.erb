@@ -1,1 +1,1 @@
-<%= react_component("WeatherIndex", { greeting: @greeting }) %>
+<%= react_component("WeatherIndex", { greeting: @greeting, weather: @weather || {}.as_json }) %>

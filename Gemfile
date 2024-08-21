@@ -58,3 +58,9 @@ end
 gem "shakapacker", "= 8.0"
 
 gem "react-rails", "= 3.2"
+
+gem "httparty", "~> 0.22.0"
+
+gem "dotenv", "~> 3.1"
+
+gem "pry", "~> 0.14.2"
