@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import Autocomplete from "react-google-autocomplete";
 
 const WeatherIndex = (props) => {
-	const [address, setAddress] = useState("");
+	const [latitude, setLatitude] = useState("");
+	const [longitude, setLongitude] = useState("");
 	const [weather, setWeather] = useState("");
-	console.log("Address is: ", address);
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
+	console.log(props.baseUrl);
 
-		// .get(`http://localhost:3000/weather?address=${address}`)
+	const handleSelectPlace = (place) => {
+		console.log(place);
+		console.log("Latitude: " + place.geometry.location.lat());
+		console.log("Longitude: " + place.geometry.location.lng());
+
+		setLatitude(place.geometry.location.lat());
+		setLongitude(place.geometry.location.lng());
+
 		axios
-			.get(`http://localhost:3000/weather`)
+			.get(`${props.baseUrl}/weather?lat=${latitude}&lon=${longitude}`)
 			.then((response) => {
-				console.log(response);
+				console.log(response.data);
 				// setWeather(response.data);
 			})
 			.catch((error) => {
@@ -28,18 +35,11 @@ const WeatherIndex = (props) => {
 				<h1>Weather</h1>
 			</div>
 			<h2>Greeting: {props.greeting}</h2>
-			<form>
-				<input
-					type="text"
-					placeholder="Enter an address"
-					value={address}
-					onChange={(event) => setAddress(event.target.value)}
-				/>
-				<button type="submit" onClick={handleSubmit}>
-					Submit
-				</button>
-			</form>
-			<p>{props.weather}</p>
+			<Autocomplete
+				apiKey={props.googleApiKey}
+				onPlaceSelected={(place) => handleSelectPlace(place)}
+			/>
+			<p>{weather}</p>
 		</React.Fragment>
 	);
 };
