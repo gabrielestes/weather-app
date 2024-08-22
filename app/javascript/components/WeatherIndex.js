@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Table, Card, Form } from "react-bootstrap";
+import React, { useState } from "react";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import axios from "axios";
 import Autocomplete from "react-google-autocomplete";
 import WeatherTable from "./WeatherTable";
@@ -100,7 +100,7 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 						<Autocomplete
 							apiKey={googleApiKey}
 							onPlaceSelected={(place) => handleSelectPlace(place)}
-							className="form-control mb-4"
+							className="form-control mb-4 custom-autocomplete-dropdown"
 							placeholder="Search for a city"
 							style={{
 								padding: "0.75rem",

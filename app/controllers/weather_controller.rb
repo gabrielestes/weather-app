@@ -14,8 +14,7 @@ class WeatherController < ApplicationController
   def retrieve_weather
     cache_key = "weather/#{weather_params[:lat]},#{weather_params[:lon]}"
 
-    Rails.cache.fetch(cache_key) do |_key, options|
-      options.expires_in(30.minutes)
+    Rails.cache.fetch(cache_key, expires_in: 30.minutes) do
       client = WeatherApi::Client.new
       response = client.forecast(weather_params[:lat], weather_params[:lon])
       {
