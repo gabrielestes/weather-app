@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Card, Form } from "react-bootstrap";
-import PropTypes from "prop-types";
 import axios from "axios";
 import Autocomplete from "react-google-autocomplete";
 import WeatherTable from "./WeatherTable";
 import LocationHeader from "./LocationHeader";
 
-const WeatherIndex = (props) => {
+const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 	const [city, setCity] = useState("");
 	const [highTemperatures, setHighTemperatures] = useState([]);
 	const [lowTemperatures, setLowTemperatures] = useState([]);
@@ -25,7 +24,7 @@ const WeatherIndex = (props) => {
 		});
 
 		axios
-			.get(`${props.baseUrl}/weather?lat=${newLatitude}&lon=${newLongitude}`)
+			.get(`${baseUrl}/weather?lat=${newLatitude}&lon=${newLongitude}`)
 			.then((response) => {
 				console.log(response.data);
 				console.log(response.data.current);
@@ -67,7 +66,7 @@ const WeatherIndex = (props) => {
 				<Col md={8} lg={6} className="text-center">
 					<Form.Group>
 						<Autocomplete
-							apiKey={props.googleApiKey}
+							apiKey={googleApiKey}
 							onPlaceSelected={(place) => handleSelectPlace(place)}
 							className="form-control mb-4"
 							placeholder="Search for a city"
@@ -102,11 +101,6 @@ const WeatherIndex = (props) => {
 			</Row>
 		</Container>
 	);
-};
-
-WeatherIndex.propTypes = {
-	baseUrl: PropTypes.string,
-	googleApiKey: PropTypes.string,
 };
 
 export default WeatherIndex;

@@ -1,11 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Table, Card } from "react-bootstrap";
 
-const WeatherTable = (props) => {
-	const dateSequence = props.dateSequence;
-	const lowTemperatures = props.lowTemperatures;
-	const highTemperatures = props.highTemperatures;
+const WeatherTable = ({ dateSequence, lowTemperatures, highTemperatures }) => {
 	const daysOfWeek = [
 		"Sunday",
 		"Monday",
@@ -78,12 +74,6 @@ const WeatherTable = (props) => {
 			</Table>
 		</Card>
 	);
-};
-
-WeatherTable.propTypes = {
-	dateSequence: PropTypes.array,
-	lowTemperatures: PropTypes.array,
-	highTemperatures: PropTypes.array,
 };
 
 export default WeatherTable;
