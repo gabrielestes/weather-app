@@ -1,6 +1,21 @@
 import React from "react";
 import { Table, Card } from "react-bootstrap";
 
+/**
+ * This component displays a table of weather forecasts.
+ *
+ * @param {Array<string>} dateSequence: Dates for the forecast.
+ * @param {Array<number>} lowTemperatures: Low temperatures for each date.
+ * @param {Array<number>} highTemperatures: High temperatures for each date.
+ * @return {JSX.Element} The WeatherTable component.
+ *
+ * Example usage:
+ * <WeatherTable
+ *   dateSequence={["2024-08-21", "2024-08-22"]}
+ *   lowTemperatures={[10, 12]}
+ *   highTemperatures={[20, 22]}
+ * />
+ */
 const WeatherTable = ({ dateSequence, lowTemperatures, highTemperatures }) => {
 	const daysOfWeek = [
 		"Sunday",

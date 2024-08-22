@@ -10,6 +10,14 @@ import { Container, Tooltip, OverlayTrigger } from "react-bootstrap";
  * @param {string} cloudCover - the cloud cover description
  * @param {string} dataRetrievedAt - the timestamp when the data was last updated
  * @return {JSX.Element} the LocationHeader component
+ *
+ * Example usage:
+ * <LocationHeader
+ *   city="San Francisco"
+ *   currentTemperature={72}
+ *   cloudCover="Partly Cloudy"
+ *   dataRetrievedAt="2024-08-21T12:00:00Z"
+ * />
  */
 const LocationHeader = ({
 	city,

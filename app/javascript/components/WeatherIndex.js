@@ -25,13 +25,10 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 	const [dataRetrievedAt, setDataRetrievedAt] = useState(null);
 
 	/**
-	 * Handles the selection of a place by extracting its location data,
-	 * fetching the corresponding weather data, and updating the component states.
-	 * The updated states trigger the rendering of the WeatherTable and LocationHeader components.
-	 * The place data is passed to the handleSelectPlace function, originating from the Google Autocomplete component.
-	 * Weather data is coming from the app backend.
+	 * Handles place selection from Google Places Autocomplete.
+	 * Sets city name and fetches weather data for the selected location.
 	 *
-	 * @param {object} place - The selected place object containing location data from Google.
+	 * @param {object} place - Selected place object.
 	 * @return {void}
 	 */
 	const handleSelectPlace = (place) => {
@@ -44,13 +41,23 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 			}
 		});
 
+		fetchWeatherData(newLatitude, newLongitude);
+	};
+
+	/**
+	 * Fetches weather data from the server based on the provided latitude and longitude.
+	 *
+	 * @param {number} latitude - The latitude of the location.
+	 * @param {number} longitude - The longitude of the location.
+	 * @returns {void}
+	 */
+	const fetchWeatherData = (latitude, longitude) => {
 		axios
-			.get(`${baseUrl}/weather?lat=${newLatitude}&lon=${newLongitude}`)
+			.get(`${baseUrl}/weather?lat=${latitude}&lon=${longitude}`)
 			.then((response) => {
 				const weatherData = response.data.weather;
 				const cachedAtUtc = response.data.cached_at_utc;
 
-				console.log("Weather data: ", weatherData);
 				evaluateCloudCover(weatherData.current.cloud_cover);
 				setCurrentTemperature(Math.round(weatherData.current.temperature_2m));
 				setLowTemperatures(weatherData.daily.temperature_2m_min);
