@@ -12,6 +12,7 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 	const [currentTemperature, setCurrentTemperature] = useState(0);
 	const [cloudCover, setCloudCover] = useState("");
 	const [dateSequence, setDateSequence] = useState([]);
+	const [dataRetrievedAt, setDataRetrievedAt] = useState(null);
 
 	const handleSelectPlace = (place) => {
 		const newLatitude = place.geometry.location.lat();
@@ -26,13 +27,16 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 		axios
 			.get(`${baseUrl}/weather?lat=${newLatitude}&lon=${newLongitude}`)
 			.then((response) => {
-				console.log(response.data);
-				console.log(response.data.current);
-				evaluateCloudCover(response.data.current.cloud_cover);
-				setCurrentTemperature(Math.round(response.data.current.temperature_2m));
-				setLowTemperatures(response.data.daily.temperature_2m_min);
-				setHighTemperatures(response.data.daily.temperature_2m_max);
-				setDateSequence(response.data.daily.time);
+				const weatherData = response.data.weather;
+				const cachedAtUtc = response.data.cached_at_utc;
+
+				console.log("Weather data: ", weatherData);
+				evaluateCloudCover(weatherData.current.cloud_cover);
+				setCurrentTemperature(Math.round(weatherData.current.temperature_2m));
+				setLowTemperatures(weatherData.daily.temperature_2m_min);
+				setHighTemperatures(weatherData.daily.temperature_2m_max);
+				setDateSequence(weatherData.daily.time);
+				setDataRetrievedAt(cachedAtUtc);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -84,6 +88,7 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 							city={city}
 							currentTemperature={currentTemperature}
 							cloudCover={cloudCover}
+							dataRetrievedAt={dataRetrievedAt}
 						/>
 					) : null}
 				</Col>
