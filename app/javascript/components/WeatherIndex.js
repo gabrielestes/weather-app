@@ -1,35 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Card, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Autocomplete from "react-google-autocomplete";
+import WeatherTable from "./WeatherTable";
 
 const WeatherIndex = (props) => {
-	const [latitude, setLatitude] = useState("");
-	const [longitude, setLongitude] = useState("");
 	const [city, setCity] = useState("");
 	const [highTemperatures, setHighTemperatures] = useState([]);
 	const [lowTemperatures, setLowTemperatures] = useState([]);
 	const [dateSequence, setDateSequence] = useState([]);
 
-	console.log(props.baseUrl);
-
-	const getDayOfWeek = (date) => {
-		const daysOfWeek = [
-			"Sunday",
-			"Monday",
-			"Tuesday",
-			"Wednesday",
-			"Thursday",
-			"Friday",
-			"Saturday",
-		];
-		return daysOfWeek[new Date(date).getDay()];
-	};
-
 	const handleSelectPlace = (place) => {
-		setLatitude(place.geometry.location.lat());
-		setLongitude(place.geometry.location.lng());
+		const newLatitude = place.geometry.location.lat();
+		const newLongitude = place.geometry.location.lng();
 
 		place.address_components.forEach((component) => {
 			if (component.types.includes("locality")) {
@@ -38,13 +22,12 @@ const WeatherIndex = (props) => {
 		});
 
 		axios
-			.get(`${props.baseUrl}/weather?lat=${latitude}&lon=${longitude}`)
+			.get(`${props.baseUrl}/weather?lat=${newLatitude}&lon=${newLongitude}`)
 			.then((response) => {
 				console.log(response.data);
 				setLowTemperatures(response.data.daily.temperature_2m_min);
 				setHighTemperatures(response.data.daily.temperature_2m_max);
 				setDateSequence(response.data.daily.time);
-				console.log(response.data.daily.time);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -85,38 +68,11 @@ const WeatherIndex = (props) => {
 			</Row>
 			<Row className="justify-content-center mt-5">
 				<Col md={8} lg={6}>
-					<Table borderless hover responsive>
-						<thead>
-							<tr>
-								<th
-									style={{ fontWeight: 300, fontSize: "1.2rem", color: "#555" }}
-								>
-									Day
-								</th>
-								<th
-									style={{ fontWeight: 300, fontSize: "1.2rem", color: "#555" }}
-								>
-									Low
-								</th>
-								<th
-									style={{ fontWeight: 300, fontSize: "1.2rem", color: "#555" }}
-								>
-									High
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							{highTemperatures.map((temperature, index) => (
-								<tr key={index} style={{ fontSize: "1rem", color: "#333" }}>
-									<td>
-										{index === 0 ? "Today" : getDayOfWeek(dateSequence[index])}
-									</td>
-									<td>{lowTemperatures[index]}°</td>
-									<td>{highTemperatures[index]}°</td>
-								</tr>
-							))}
-						</tbody>
-					</Table>
+					<WeatherTable
+						dateSequence={dateSequence}
+						lowTemperatures={lowTemperatures}
+						highTemperatures={highTemperatures}
+					/>
 				</Col>
 			</Row>
 		</Container>
