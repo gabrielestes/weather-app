@@ -57,7 +57,7 @@ const WeatherIndex = (props) => {
 	};
 
 	return (
-		<Container className="mt-5">
+		<Container className="mt-5 bg-dark text-light" fluid>
 			<Row className="justify-content-center">
 				<Col md={8} lg={6} className="text-center">
 					<h1 className="display-4 mb-4">Weather View</h1>
