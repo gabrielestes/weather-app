@@ -6,8 +6,6 @@ class WeatherController < ApplicationController
     if weather_params[:lat] && weather_params[:lon]
       @weather = JSON.parse(retrieve_weather)
       render json: @weather
-    else
-      render json: {}, status: :no_content
     end
   end
 

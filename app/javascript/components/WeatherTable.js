@@ -39,8 +39,8 @@ const WeatherTable = (props) => {
 				{highTemperatures.map((temperature, index) => (
 					<tr key={index} style={{ fontSize: "1rem", color: "#333" }}>
 						<td>{index === 0 ? "Today" : getDayOfWeek(dateSequence[index])}</td>
-						<td>{lowTemperatures[index]}°</td>
-						<td>{highTemperatures[index]}°</td>
+						<td>{Math.round(lowTemperatures[index])}°</td>
+						<td>{Math.round(highTemperatures[index])}°</td>
 					</tr>
 				))}
 			</tbody>
