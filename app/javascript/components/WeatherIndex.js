@@ -5,6 +5,16 @@ import Autocomplete from "react-google-autocomplete";
 import WeatherTable from "./WeatherTable";
 import LocationHeader from "./LocationHeader";
 
+/**
+ * Renders the WeatherIndex component which contains the location search bar and resulting weather data.
+ * The search bar is using the Google Places Autocomplete API.
+ * When a location is selected, the weather data for that location is fetched.
+ * The fetched data is used to render the WeatherTable and LocationHeader components.
+ *
+ * @param {string} baseUrl - The base URL for the weather API.
+ * @param {string} googleApiKey - The Google API key for the autocomplete feature.
+ * @return {JSX.Element} The rendered WeatherIndex component.
+ */
 const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 	const [city, setCity] = useState("");
 	const [highTemperatures, setHighTemperatures] = useState([]);
@@ -14,6 +24,16 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 	const [dateSequence, setDateSequence] = useState([]);
 	const [dataRetrievedAt, setDataRetrievedAt] = useState(null);
 
+	/**
+	 * Handles the selection of a place by extracting its location data,
+	 * fetching the corresponding weather data, and updating the component states.
+	 * The updated states trigger the rendering of the WeatherTable and LocationHeader components.
+	 * The place data is passed to the handleSelectPlace function, originating from the Google Autocomplete component.
+	 * Weather data is coming from the app backend.
+	 *
+	 * @param {object} place - The selected place object containing location data from Google.
+	 * @return {void}
+	 */
 	const handleSelectPlace = (place) => {
 		const newLatitude = place.geometry.location.lat();
 		const newLongitude = place.geometry.location.lng();
@@ -43,6 +63,14 @@ const WeatherIndex = ({ baseUrl, googleApiKey }) => {
 			});
 	};
 
+	/**
+	 * Evaluates the cloud cover based on the given percentage and updates the cloud cover description.
+	 * This is intended to be a human-readable description of the cloud cover, similar to Apple's iOS Weather app.
+	 * The cloud cover description is used in the LocationHeader component.
+	 *
+	 * @param {number} percentage - the cloud cover percentage
+	 * @return {void}
+	 */
 	const evaluateCloudCover = (percentage) => {
 		let cloudCoverDescription;
 
