@@ -4,6 +4,7 @@ This repository contains a weather application built with Ruby on Rails and Reac
 
 ## Table of Contents
 
+- [Features](#features)
 - [Getting Started](#getting-started)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -11,6 +12,26 @@ This repository contains a weather application built with Ruby on Rails and Reac
 - [Running Tests](#running-tests)
 - [Built With](#built-with)
 - [Design Patterns](#design-patterns)
+
+## Features
+
+### Autocomplete Search
+
+The application uses Google Places API to provide autocompletion.
+
+![Autocompletion](app/assets/images/autocomplete_img.png)
+
+### Daily Weather Forecast
+
+The application displays weather data retrieved from the free [Open-Meteo API](https://open-meteo.com/), supplied with coordinates from the Google Places API.
+
+![App Overview](app/assets/images/app_overview_img.png)
+
+### Efficient Data Retrieval
+
+The application stores weather data by coordinates in the cache for 30 minutes, preventing redundant calls to the Open-Meteo API. An icon can be hovered over to display when the data was last retrieved.
+
+![DataTooltip](app/assets/images/cache_data_img.png)
 
 ## Getting Started
 
