@@ -64,3 +64,5 @@ gem "httparty", "~> 0.22.0"
 gem "dotenv", "~> 3.1"
 
 gem "pry", "~> 0.14.2"
+
+gem "rspec-rails", "~> 6.1"
