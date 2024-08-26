@@ -81,13 +81,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ## Running the Application
 
-Start the Rails server:
-
-```sh
-rails server
-```
-
-Start the Webpack dev server:
+Build the CSS and start the server:
 
 ```sh
 yarn start
